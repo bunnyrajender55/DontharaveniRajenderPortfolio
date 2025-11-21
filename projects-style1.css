@@ -1,0 +1,298 @@
+
+   /* General Styles */
+:root {
+  --first-color: #6c5ce7;
+  --first-color-alt: #5a4dbf;
+  --title-color: #2d3436;
+  --text-color: #636e72;
+  --container-color: #ffffff;
+  --body-color: hsl(var(--hue-color), 60%, 99%);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --modal-bg: rgba(0, 0, 0, 0.8);
+}
+
+/* Project List */
+.portfolio__list {
+  display: grid;
+  gap: 1.8rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.project__card {
+  background: var(--container-color);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.project__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.project__media {
+  position: relative;
+  overflow: hidden;
+  height: 300px; /* Smaller media size */
+}
+
+.project__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.project__media:hover .project__img {
+  transform: scale(1.1);
+}
+
+.project__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project__media:hover .project__overlay {
+  opacity: 1;
+}
+
+.project__play-button {
+  background: var(--first-color);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.project__play-button:hover {
+  background: var(--first-color-alt);
+}
+
+.project__info {
+  padding: 1rem;
+  text-align: center;
+}
+
+.project__title {
+  font-size: 1.25rem;
+  color: var(--title-color);
+  margin-bottom: 0.5rem;
+}
+
+.project__description {
+  font-size: 0.875rem;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.project__links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.project__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--first-color);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.project__link:hover {
+  background: var(--first-color-alt);
+  transform: translateY(-3px);
+}
+
+/* Video Container */
+.project__video-container {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.project__video {
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+
+.project__video-exit {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.project__video-exit:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+/* Entrance Animations */
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply Animations to Project Cards */
+.project__card {
+  opacity: 0; /* Start hidden */
+  transform: translateY(20px); /* Initial position */
+  animation-fill-mode: forwards; /* Keep the final state */
+}
+
+.project__card:nth-child(odd) {
+  animation: slideInFromLeft 0.8s ease-out;
+}
+
+.project__card:nth-child(even) {
+  animation: slideInFromRight 0.8s ease-out;
+}
+
+.project__card:last-child {
+  animation: slideInFromBottom 0.8s ease-out;
+}
+
+    /* Modal Styling */
+    .video-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+  
+    .video-modal.active {
+      display: flex;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+  
+    .video-modal__content {
+      position: relative;
+      max-width: 90%;
+      width: 100%;
+      height: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .video-modal__video {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      box-shadow: 0px 10px 20px rgba(255, 255, 255, 0.2);
+    }
+  
+    .video-modal__close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+      z-index: 1000;
+      transition: 0.3s;
+    }
+  
+    .video-modal__close:hover {
+      transform: scale(1.2);
+    }
+  
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  
+    /* Play Button */
+    .project__play-button {
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      color: white;
+      font-size: 24px;
+      border-radius: 50%;
+      padding: 15px;
+      transition: 0.3s ease;
+    }
+  
+    .project__play-button:hover {
+      background: rgba(255, 255, 255, 0.8);
+      color: black;
+    }
+    @media screen and (max-width: 768px) {
+      .project__card{
+        margin-left: 5%;
+        margin-right: 5%;
+      }
+    }
